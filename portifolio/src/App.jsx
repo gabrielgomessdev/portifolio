@@ -60,7 +60,7 @@ const PROJECTS = [
     solution:
       "Aplicação mobile desenvolvida em React Native com módulos para clientes, fornecedores, estoque, movimentações e gestão do negócio, integrada a uma API REST e banco de dados no Render.",
     tech: ["React Native", "API REST", "Render", "Modelagem de dados"],
-    github: "",
+    github: "https://github.com/gabrielgomessdev/tanamao",
     demo: "",
     cover: "/images/ta-na-mao.png",
   },
@@ -73,7 +73,7 @@ const PROJECTS = [
     solution:
       "Plataforma desenvolvida em C# com arquitetura MVC para facilitar o descarte correto de resíduos eletroeletrônicos, com documentação de requisitos e foco em logística reversa e sustentabilidade.",
     tech: ["C#", ".NET MVC", "Engenharia de software", "UX"],
-    github: "https://github.com/gabrielgomessdev/tanamao",
+    github: "",
     demo: "https://reeconecta20251028113611-cfh4hedtabf6bmf8.brazilsouth-01.azurewebsites.net",
     cover: "/images/reeconecta.png",
   },
