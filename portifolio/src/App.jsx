@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { GitBranch, Briefcase, Mail, ExternalLink, Menu, X } from "lucide-react";
+import heroBg from "/images/img-fundo.png";
+
 
 const TOKENS = `
   @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap');
@@ -174,10 +176,36 @@ function NavBar() {
 
 function Hero() {
   return (
-    <section id="top" style={{ maxWidth: 1160, margin: "0 auto", padding: "96px 24px 64px" }}>
-      <p style={{ color: "var(--accent)", fontSize: 14, marginBottom: 16 }}>
+    <section
+      id="top"
+      style={{
+        maxWidth: 1160,
+        margin: "0 auto",
+        padding: "96px 24px 64px",
+        position: "relative",
+        overflow: "hidden",
+        backgroundImage: `
+          linear-gradient(
+            rgba(0, 0, 0, 0.42),
+            rgba(0, 0, 0, 0.82)
+          ),
+          url(${heroBg})
+        `,
+        backgroundSize: "cover",
+        backgroundPosition: "center",
+        borderRadius: 16,
+      }}
+    >
+      <p
+        style={{
+          color: "var(--accent)",
+          fontSize: 14,
+          marginBottom: 16,
+        }}
+      >
         Disponível para oportunidades
       </p>
+
       <h1
         style={{
           fontSize: "clamp(32px, 5vw, 56px)",
@@ -188,6 +216,7 @@ function Hero() {
       >
         Desenvolvedor em formação, construindo soluções reais.
       </h1>
+
       <p
         style={{
           marginTop: 24,
@@ -197,11 +226,13 @@ function Hero() {
           color: "var(--text-muted)",
         }}
       >
-        Desenvolvedor de Software em formação e Embaixador Estudantil do Google 2026 com
-        ênfase em Inteligência Artificial. Cursando Análise e Desenvolvimento de Sistemas
-        na PUC Minas e com base técnica pelo IFNMG, tenho como missão conectar inovação,
-        tecnologia de ponta e desenvolvimento prático.
+        Desenvolvedor de Software em formação e Embaixador Estudantil do
+        Google 2026 com ênfase em Inteligência Artificial. Cursando Análise e
+        Desenvolvimento de Sistemas na PUC Minas e com base técnica pelo
+        IFNMG, tenho como missão conectar inovação, tecnologia de ponta e
+        desenvolvimento prático.
       </p>
+
       <div style={{ display: "flex", gap: 14, marginTop: 36 }}>
         <a
           href="#projetos"
@@ -216,6 +247,7 @@ function Hero() {
         >
           Ver projetos
         </a>
+
         <a
           href="#contato"
           style={{
