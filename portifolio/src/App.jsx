@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { GitBranch, Briefcase, Mail, ExternalLink } from "lucide-react";
+import { GitBranch, Briefcase, Mail, ExternalLink, Menu, X } from "lucide-react";
 
 const TOKENS = `
   @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;700&family=Inter:wght@400;500;600&display=swap');
@@ -26,6 +26,24 @@ const TOKENS = `
     margin: 0;
   }
   .portfolio-root a { color: inherit; text-decoration: none; }
+
+  .pf-nav-links-desktop { display: flex; gap: 28px; }
+  .pf-nav-toggle { display: none; }
+  .pf-nav-links-mobile { display: none; }
+
+  @media (max-width: 720px) {
+    .pf-nav-links-desktop { display: none; }
+    .pf-nav-toggle { display: flex; }
+    .pf-nav-links-mobile.pf-open {
+      display: flex;
+      flex-direction: column;
+      gap: 4px;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+    }
+    .pf-nav-links-mobile a { padding: 8px 0; font-size: 15px; }
+  }
 `;
 
 const PROFILE_PHOTO = "/images/foto.png";
@@ -72,11 +90,9 @@ const PROJECTS = [
   },
 ];
 
-/* ---------------------------------------------------------
-   Navegação
---------------------------------------------------------- */
 function NavBar() {
   const [scrolled, setScrolled] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 8);
@@ -98,33 +114,55 @@ function NavBar() {
         top: 0,
         zIndex: 40,
         backdropFilter: "blur(8px)",
-        background: scrolled ? "rgba(10,14,20,0.85)" : "transparent",
+        background: scrolled || menuOpen ? "rgba(10,14,20,0.95)" : "transparent",
         borderBottom: scrolled ? "1px solid var(--border)" : "1px solid transparent",
         transition: "all 0.25s ease",
       }}
     >
-      <div
-        style={{
-          maxWidth: 1160,
-          margin: "0 auto",
-          padding: "18px 24px",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-        }}
-      >
-        <a href="#top" style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 18 }}>
-          gabriel.dev
-        </a>
-        <nav style={{ display: "flex", gap: 28 }}>
+      <div style={{ maxWidth: 1160, margin: "0 auto", padding: "18px 24px" }}>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+          <a href="#top" style={{ fontFamily: "var(--font-heading)", fontWeight: 700, fontSize: 18 }}>
+            gabriel.dev
+          </a>
+
+          <nav className="pf-nav-links-desktop">
+            {links.map((l) => (
+              <a
+                key={l.href}
+                href={l.href}
+                style={{ fontSize: 14, color: "var(--text-muted)" }}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text)")}
+                onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-muted)")}
+              >
+                {l.label}
+              </a>
+            ))}
+          </nav>
+
+          <button
+            className="pf-nav-toggle"
+            onClick={() => setMenuOpen((v) => !v)}
+            aria-label={menuOpen ? "Fechar menu" : "Abrir menu"}
+            aria-expanded={menuOpen}
+            style={{
+              background: "transparent",
+              border: "1px solid var(--border)",
+              borderRadius: 8,
+              padding: 8,
+              color: "var(--text)",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            {menuOpen ? <X size={18} /> : <Menu size={18} />}
+          </button>
+        </div>
+        <nav
+          className={`pf-nav-links-mobile${menuOpen ? " pf-open" : ""}`}
+          onClick={() => setMenuOpen(false)}
+        >
           {links.map((l) => (
-            <a
-              key={l.href}
-              href={l.href}
-              style={{ fontSize: 14, color: "var(--text-muted)" }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = "var(--text)")}
-              onMouseLeave={(e) => (e.currentTarget.style.color = "var(--text-muted)")}
-            >
+            <a key={l.href} href={l.href} style={{ color: "var(--text-muted)" }}>
               {l.label}
             </a>
           ))}
@@ -134,9 +172,6 @@ function NavBar() {
   );
 }
 
-/* ---------------------------------------------------------
-   Hero
---------------------------------------------------------- */
 function Hero() {
   return (
     <section id="top" style={{ maxWidth: 1160, margin: "0 auto", padding: "96px 24px 64px" }}>
@@ -199,9 +234,6 @@ function Hero() {
   );
 }
 
-/* ---------------------------------------------------------
-   Sobre mim
---------------------------------------------------------- */
 function About() {
   return (
     <section id="sobre" style={{ maxWidth: 1160, margin: "0 auto", padding: "64px 24px" }}>
@@ -247,9 +279,7 @@ function About() {
   );
 }
 
-/* ---------------------------------------------------------
-   Habilidades
---------------------------------------------------------- */
+
 const SKILL_GROUPS = [
   {
     label: "Back-end",
@@ -310,9 +340,7 @@ function Skills() {
   );
 }
 
-/* ---------------------------------------------------------
-   Projetos
---------------------------------------------------------- */
+
 function ProjectCard({ project }) {
   const [hover, setHover] = useState(false);
   return (
@@ -411,9 +439,6 @@ function Projects() {
   );
 }
 
-/* ---------------------------------------------------------
-   Contato
---------------------------------------------------------- */
 function Contact() {
   return (
     <section id="contato" style={{ maxWidth: 1160, margin: "0 auto", padding: "64px 24px 96px" }}>
@@ -453,9 +478,8 @@ function Contact() {
   );
 }
 
-/* ---------------------------------------------------------
-   App
---------------------------------------------------------- */
+
+
 export default function PortfolioApp() {
   return (
     <div className="portfolio-root">
